@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGO TESTER — How do you respond when your ego is challenged?</title>
+<meta name="description" content="A provocative self-reflection simulator designed to reveal response patterns under ego threat.">
+<style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #333333;
+      background-color: #ffffff;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      color: #002855;
+    }
+
+    .brand-mark{display:none}.brand-logo{display:inline-block;width:27px;height:27px;margin-right:7px;border-radius:9px;object-fit:cover;vertical-align:-7px}
+
+    .nav-note {
+      color: #777777;
+      font-size: 14px;
+    }
+
+    main { padding: 24px 0 70px; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 480px;
+      padding: 58px 56px;
+      border-radius: 4px;
+      background-image:
+        linear-gradient(to right, rgba(0, 40, 85, 0.97) 0%, rgba(0, 40, 85, 0.74) 100%),
+        url('https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+      background-size: cover;
+      background-position: center;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 20px;
+      background: rgba(255,255,255,.10);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 18px 0 16px;
+      max-width: 780px;
+      font-size: clamp(44px, 7vw, 78px);
+      line-height: .98;
+      letter-spacing: -.06em;
+      color: #ffffff;
+    }
+
+    h1 .accent { color: #9dd7ff; }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,.88);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 18px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: all .2s ease;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .hero-btn.primary { background: #ffffff; color: #002855; }
+    .hero-btn.secondary {
+      background: rgba(255,255,255,.12);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,.30);
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(0,0,0,.15);
+    }
+
+    .hero-note {
+      margin-top: 14px;
+      color: rgba(255,255,255,.68);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .formula {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      margin-top: 20px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 4px;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.86);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .formula b { color: #ffffff; }
+    .arrow { color: rgba(255,255,255,.50); }
+
+    .test-wrap {
+      margin-top: 24px;
+      border: 1px solid #e5e5e5;
+      background: #ffffff;
+    }
+
+    .test-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      padding: 18px 22px;
+      border-bottom:1px solid #e5e5e5;
+      background:#fbfcfe;
+    }
+
+    .progress-wrap { flex:1; }
+    .progress-label {
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:8px;
+      color:#666;
+      font-size:11px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .progress {
+      width:100%;
+      height:8px;
+      background:#e9eef3;
+      overflow:hidden;
+      border-radius:999px;
+    }
+
+    .progress-bar {
+      width:0%;
+      height:100%;
+      background:#005eb8;
+      transition:width .35s ease;
+    }
+
+    .live-badge {
+      padding:8px 10px;
+      border:1px solid #dfe7ef;
+      background:#fff;
+      color:#002855;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .question-card {
+      padding: 34px;
+      min-height: 450px;
+    }
+
+    .phase {
+      color:#005eb8;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .question-number {
+      margin-top:8px;
+      color:#999;
+      font-size:12px;
+    }
+
+    .question {
+      margin: 18px 0 12px;
+      max-width: 920px;
+      color:#002855;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height:1.04;
+      letter-spacing:-.045em;
+    }
+
+    .question-sub {
+      max-width: 820px;
+      color:#666;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .answers {
+      display:grid;
+      gap:10px;
+      margin-top:25px;
+    }
+
+    .answer {
+      position:relative;
+      display:flex;
+      align-items:flex-start;
+      gap:13px;
+      width:100%;
+      text-align:left;
+      padding:16px 18px;
+      border:1px solid #e2e7ec;
+      border-radius:4px;
+      background:#fff;
+      color:#333;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .answer:hover {
+      border-color:#9dc7e8;
+      transform:translateY(-1px);
+      box-shadow:0 5px 13px rgba(0,0,0,.06);
+    }
+
+    .answer .letter {
+      flex:0 0 auto;
+      width:28px;
+      height:28px;
+      display:grid;
+      place-items:center;
+      background:#edf6ff;
+      color:#005eb8;
+      font-size:12px;
+      font-weight:800;
+      border-radius:4px;
+    }
+
+    .answer strong {
+      display:block;
+      margin-bottom:3px;
+      color:#002855;
+      font-size:14px;
+    }
+
+    .answer span {
+      display:block;
+      color:#686868;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .tester-footer {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:18px 22px;
+      border-top:1px solid #e5e5e5;
+      background:#fbfcfe;
+    }
+
+    .microcopy {
+      color:#777;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .ghost-btn, .next-btn {
+      padding:11px 15px;
+      border-radius:4px;
+      cursor:pointer;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .ghost-btn {
+      border:1px solid #dfe5ea;
+      background:#fff;
+      color:#555;
+    }
+
+    .next-btn {
+      border:1px solid #002855;
+      background:#002855;
+      color:#fff;
+    }
+
+    .result {
+      display:none;
+      padding:34px;
+    }
+
+    .result.show { display:block; }
+
+    .result-kicker {
+      color:#005eb8;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .result h2 {
+      margin:8px 0 10px;
+      color:#002855;
+      font-size:38px;
+      line-height:1.05;
+      letter-spacing:-.04em;
+    }
+
+    .result-intro {
+      max-width:820px;
+      color:#666;
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .result-grid {
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:25px;
+    }
+
+    .metric {
+      padding:17px;
+      border:1px solid #e5e5e5;
+      background:#fff;
+    }
+
+    .metric-head {
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+    }
+
+    .metric-name {
+      color:#002855;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .metric-score {
+      color:#005eb8;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .metric-bar {
+      height:8px;
+      margin-top:10px;
+      background:#edf1f5;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .metric-fill {
+      height:100%;
+      width:0%;
+      background:#005eb8;
+      transition:width .7s ease;
+    }
+
+    .metric-desc {
+      margin-top:8px;
+      color:#707070;
+      font-size:11px;
+      line-height:1.5;
+    }
+
+    .verdict {
+      margin-top:22px;
+      padding:18px 18px 18px 20px;
+      border-left:3px solid #005eb8;
+      background:#f7f9fb;
+      color:#4b4b4b;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .verdict strong { color:#002855; }
+
+    .result-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+
+    .section {
+      margin-top:24px;
+      padding:32px;
+      border:1px solid #e5e5e5;
+      background:#fff;
+    }
+
+    .section-kicker {
+      color:#005eb8;
+      font-size:11px;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .section h2 {
+      margin:8px 0 12px;
+      color:#002855;
+      font-size:30px;
+      line-height:1.12;
+      letter-spacing:-.03em;
+    }
+
+    .section p {
+      max-width:920px;
+      margin:0 0 13px;
+      color:#555;
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .warning {
+      margin-top:18px;
+      padding:15px 16px;
+      border-left:3px solid #7a5f00;
+      background:#fbf8ea;
+      color:#5e542e;
+      font-size:12px;
+      line-height:1.6;
+    }
+
+    .footer {
+      padding: 28px 6px 0;
+      text-align: center;
+      color: #888888;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer strong { color:#555; }
+
+    @media (max-width:780px) {
+      .wrap { width:min(100% - 18px, 680px); }
+      .nav { height:62px; }
+      .nav-note { display:none; }
+      main { padding-top:14px; }
+      .hero { min-height:520px; padding:42px 26px; }
+      .hero-actions { flex-direction:column; align-items:stretch; }
+      .hero-btn { justify-content:center; }
+      h1 { font-size:52px; }
+      .question-card, .result, .section { padding:26px 22px; }
+      .result-grid { grid-template-columns:1fr; }
+      .test-header { padding:14px; }
+      .tester-footer { align-items:flex-start; flex-direction:column; }
+    }
+
+    @media (max-width:520px) {
+      h1 { font-size:44px; }
+      .formula { line-height:1.8; }
+      .question { font-size:34px; }
+    }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand">EGO TESTER</div>
+    <div class="nav-note">A provocation-based self-reflection simulator</div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">⚠ Ego under pressure</div>
+        <h1>How do you behave when your <span class="accent">ego gets touched?</span></h1>
+        <p class="lead">
+          Calm answers are easy when nobody challenges your self-image. This test deliberately pushes harder:
+          blame, status, competence, hypocrisy, accountability, and public embarrassment.
+        </p>
+
+        <div class="hero-actions">
+          <button class="hero-btn primary" onclick="startTest()">Start the test →</button>
+          <button class="hero-btn secondary" onclick="scrollToInfo()">Read the rules</button>
+        </div>
+
+        <div class="formula">
+          <b>Trigger</b><span class="arrow">→</span>
+          <b>Reaction</b><span class="arrow">→</span>
+          <b>Pattern</b><span class="arrow">→</span>
+          <b>Reflection</b>
+        </div>
+
+        <div class="hero-note">
+          Designed for reflection, not diagnosis. The test measures response patterns inside this simulation.
+        </div>
+      </div>
+    </section>
+
+    <section class="test-wrap" id="tester">
+      <div class="test-header">
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span id="progressText">Ready</span>
+            <span id="progressPct">0%</span>
+          </div>
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+        <div class="live-badge">LIVE TEST</div>
+      </div>
+
+      <div class="question-card" id="questionCard">
+        <div class="phase">Before we begin</div>
+        <div class="question-number">12 scenarios • answer as you would actually respond</div>
+        <div class="question">The uncomfortable part is the point.</div>
+        <div class="question-sub">
+          Do not choose the response that sounds nicest. Choose the response that is closest to what you would
+          genuinely think, say, or do when your pride is involved.
+        </div>
+        <div class="answers">
+          <button class="answer" onclick="startTest()">
+            <div class="letter">→</div>
+            <div>
+              <strong>Put my ego in the room.</strong>
+              <span>Start the simulation and see what happens when the questions stop being polite.</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="result" id="result">
+        <div class="result-kicker">Your response pattern</div>
+        <h2 id="resultTitle">Your ego pattern</h2>
+        <p class="result-intro" id="resultIntro"></p>
+
+        <div class="result-grid" id="resultGrid"></div>
+
+        <div class="verdict" id="verdict"></div>
+
+        <div class="result-actions">
+          <button class="next-btn" onclick="restartTest()">Test again</button>
+          <button class="ghost-btn" onclick="copyResult()">Copy result</button>
+        </div>
+      </div>
+
+      <div class="tester-footer" id="testerFooter">
+        <div class="microcopy">The strongest trigger is often the one that makes you think: “Why would you ask me that?”</div>
+        <button class="next-btn" onclick="startTest()">Start →</button>
+      </div>
+    </section>
+
+    <section class="section" id="info">
+      <div class="section-kicker">What this tests</div>
+      <h2>Provocation is the mirror.</h2>
+      <p>
+        The point is not to prove that someone has a “big ego.” The point is to observe what changes when
+        self-image is threatened: reasoning, accountability, blame, status defense, escalation, or withdrawal.
+      </p>
+      <p>
+        Some scenarios are deliberately unfair, confrontational, or irritating. That is intentional.
+        A neutral question can reveal what you believe. A provocative question can reveal how you defend it.
+      </p>
+      <div class="warning">
+        <strong>Important:</strong> This is a self-reflection game, not a clinical or psychological diagnosis.
+        A high score in any dimension means the simulated responses leaned toward that pattern in this test.
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>EGO TESTER</strong> · Challenge the ego. Observe the response. Learn the pattern.
+    </div>
+  </main>
+</div>
+
+<script>
+const scenarios = [
+  {
+    phase:"01 · Competence",
+    q:"Someone says: “Honestly, I expected more from you. This was not a difficult task.” What is your first internal reaction?",
+    sub:"Do not answer what sounds mature. Answer what flashes through your mind first.",
+    answers:[
+      ["A","“What exactly did I do wrong?” I want the specifics.","accountability",1,"deescalation",1],
+      ["B","“Who are you to judge my competence?”","defensiveness",2,"status",2],
+      ["C","I immediately start listing why the situation made the task harder than it looked.","blame",2,"defensiveness",1],
+      ["D","I become much more determined to prove that person wrong.","escalation",2,"status",1]
+    ]
+  },
+  {
+    phase:"02 · Accountability",
+    q:"You discover that your decision caused a problem. Then someone asks: “So, are you taking responsibility for this?”",
+    sub:"The question is deliberately phrased to put you on the spot.",
+    answers:[
+      ["A","Yes. I caused part of it. Let me fix what I can.","accountability",2,"deescalation",1],
+      ["B","“Part of it”? What about everyone else involved?","blame",2,"defensiveness",1],
+      ["C","I explain why my decision was reasonable given the information I had.","defensiveness",2,"accountability",1],
+      ["D","I point out their previous mistakes too. Fair is fair.","blame",2,"escalation",2]
+    ]
+  },
+  {
+    phase:"03 · Public Ego",
+    q:"A colleague corrects you in front of several people. The correction is technically accurate.",
+    sub:"What do you do?",
+    answers:[
+      ["A","Accept it, then move on.","accountability",1,"deescalation",2],
+      ["B","Correct their wording, tone, or knowledge in return.","escalation",2,"status",1],
+      ["C","Stay quiet, but internally I want to make sure they regret embarrassing me.","status",2,"escalation",1],
+      ["D","I ask what evidence supports the correction and focus on the facts.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"04 · Status",
+    q:"Someone with less experience than you gives you advice. Their advice is actually useful.",
+    sub:"Your ego has just been given a very specific opportunity to object.",
+    answers:[
+      ["A","Useful is useful. I take it.","accountability",2,"deescalation",1],
+      ["B","I find reasons why their advice does not really apply to my situation.","defensiveness",2,"status",1],
+      ["C","I feel irritated that they are telling me something I already know.","status",2,"defensiveness",1],
+      ["D","I ask them to explain how they arrived at it.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"05 · The Mirror",
+    q:"Someone tells you: “You keep saying other people are the problem, but you are the common factor in all these conflicts.”",
+    sub:"This one is supposed to sting.",
+    answers:[
+      ["A","That is uncomfortable. I should examine the pattern.","accountability",2,"deescalation",1],
+      ["B","That is an unfair generalization and I can list ten reasons why.","defensiveness",2,"blame",1],
+      ["C","I immediately think of their own flaws.","blame",2,"status",1],
+      ["D","I ask them for concrete examples before agreeing or disagreeing.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"06 · Challenge",
+    q:"Someone says: “I think you are defending your pride, not your position.”",
+    sub:"Do you defend the argument, or do you defend the image of yourself?",
+    answers:[
+      ["A","I check whether I can separate the argument from my pride.","accountability",2,"deescalation",1],
+      ["B","“That is ridiculous. You clearly do not understand me.”","defensiveness",2,"escalation",1],
+      ["C","I double down because backing off now would make me look weak.","status",2,"escalation",2],
+      ["D","I ask which part of my reasoning makes them think that.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"07 · Dragging People In",
+    q:"You have a personal conflict with someone at work. They refuse to admit fault. What do you do next?",
+    sub:"This is about what happens when private frustration enters a professional system.",
+    answers:[
+      ["A","Keep it between us unless there is a legitimate work issue.","deescalation",2,"accountability",1],
+      ["B","Tell several colleagues so they understand what the other person is really like.","escalation",2,"blame",2],
+      ["C","Find someone influential who can support my side.","status",2,"escalation",1],
+      ["D","Document the work-relevant facts and escalate only the work impact.","accountability",2,"deescalation",1]
+    ]
+  },
+  {
+    phase:"08 · Hypocrisy",
+    q:"Someone catches you doing something you previously criticized another person for doing.",
+    sub:"The most uncomfortable part is not being caught. It is being compared to yourself.",
+    answers:[
+      ["A","“You're right. That was inconsistent.”","accountability",2,"deescalation",1],
+      ["B","“Mine was different because my situation was different.”","defensiveness",2,"blame",1],
+      ["C","I point out that they have also been hypocritical.","blame",2,"escalation",1],
+      ["D","I explain the difference, but I am willing to admit the parts that do not hold up.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"09 · Losing Control",
+    q:"You make a reasonable argument, but the other person still disagrees. What bothers you most?",
+    sub:"Notice whether disagreement feels like information or disrespect.",
+    answers:[
+      ["A","Nothing personal. We can disagree.","deescalation",2,"accountability",1],
+      ["B","I start questioning how they could possibly fail to understand.","status",1,"defensiveness",2],
+      ["C","I feel the need to keep arguing until they admit I am right.","escalation",2,"status",2],
+      ["D","I ask what evidence would change either of our minds.","deescalation",2,"accountability",1]
+    ]
+  },
+  {
+    phase:"10 · Retreat",
+    q:"You realize halfway through an argument that you may actually be wrong.",
+    sub:"This is the moment where ego often asks for an exit strategy.",
+    answers:[
+      ["A","I change my position and say so.","accountability",3],
+      ["B","I narrow the argument until I can still claim I was technically right.","defensiveness",2,"status",1],
+      ["C","I bring up a different issue where I am stronger.","blame",2,"escalation",1],
+      ["D","I ask for time to rethink it before responding.","accountability",2,"deescalation",1]
+    ]
+  },
+  {
+    phase:"11 · Final Trigger",
+    q:"Someone says: “Your reaction is proving my point.” What happens inside you?",
+    sub:"This sentence is designed to be irritating. That is the test.",
+    answers:[
+      ["A","I slow down because I do not want my reaction to decide the argument.","deescalation",2,"accountability",1],
+      ["B","I feel trapped and want to prove them wrong immediately.","escalation",2,"status",1],
+      ["C","I tell them they are manipulating the conversation.","defensiveness",2,"escalation",1],
+      ["D","I ask what part of my reaction they are referring to.","accountability",1,"deescalation",1]
+    ]
+  },
+  {
+    phase:"12 · The Ego Test",
+    q:"Be honest: if admitting you were wrong would make the other person feel victorious, how hard would it be for you to say, “You were right”?",
+    sub:"Forget appearances. This is the final mirror.",
+    answers:[
+      ["A","Not easy, but truth matters more than winning.","accountability",3,"deescalation",1],
+      ["B","Very hard. I do not like giving people that satisfaction.","status",3,"defensiveness",1],
+      ["C","I would rather keep arguing until they lose the advantage.","escalation",3,"status",2],
+      ["D","I would need to separate the truth from how the other person might feel about it.","accountability",2,"deescalation",1]
+    ]
+  }
+];
+
+const state = {
+  index: -1,
+  scores: {
+    defensiveness:0,
+    blame:0,
+    escalation:0,
+    accountability:0,
+    deescalation:0,
+    status:0
+  },
+  answers:[]
+};
+
+const labels = {
+  defensiveness:{name:"Defensiveness", desc:"How strongly you protect your self-image when challenged."},
+  blame:{name:"Blame shifting", desc:"How quickly responsibility moves toward circumstances or other people."},
+  escalation:{name:"Escalation", desc:"How likely your response is to intensify the conflict."},
+  accountability:{name:"Accountability", desc:"How willing you are to inspect your own role under pressure."},
+  deescalation:{name:"De-escalation", desc:"How strongly you preserve the relationship and lower the temperature."},
+  status:{name:"Status defense", desc:"How strongly competence, pride, or social position enters your response."}
+};
+
+function startTest() {
+  state.index = 0;
+  state.scores = {defensiveness:0, blame:0, escalation:0, accountability:0, deescalation:0, status:0};
+  state.answers = [];
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("testerFooter").style.display = "";
+  renderScenario();
+  document.getElementById("tester").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function renderScenario() {
+  const s = scenarios[state.index];
+  const total = scenarios.length;
+  const pct = Math.round(((state.index) / total) * 100);
+
+  document.getElementById("progressText").textContent = `Scenario ${state.index + 1} of ${total}`;
+  document.getElementById("progressPct").textContent = `${pct}%`;
+  document.getElementById("progressBar").style.width = `${pct}%`;
+
+  const letters = ["A","B","C","D"];
+  const answers = s.answers.map((a,i) => `
+    <button class="answer" onclick="selectAnswer(${i})">
+      <div class="letter">${letters[i]}</div>
+      <div>
+        <strong>${escapeHTML(a[1])}</strong>
+        <span>${getAnswerHint(a)}</span>
+      </div>
+    </button>
+  `).join("");
+
+  document.getElementById("questionCard").innerHTML = `
+    <div class="phase">${escapeHTML(s.phase)}</div>
+    <div class="question-number">Question ${state.index + 1} / ${total}</div>
+    <div class="question">${escapeHTML(s.q)}</div>
+    <div class="question-sub">${escapeHTML(s.sub)}</div>
+    <div class="answers">${answers}</div>
+  `;
+
+  window.scrollTo({top: document.getElementById("tester").offsetTop - 10, behavior:"smooth"});
+}
+
+function getAnswerHint(a) {
+  const tags = [];
+  for (let i=2;i<a.length;i+=2) {
+    const key = a[i];
+    tags.push(labels[key]?.name || key);
+  }
+  return tags.join(" · ");
+}
+
+function selectAnswer(answerIndex) {
+  const s = scenarios[state.index];
+  const a = s.answers[answerIndex];
+  for (let i=2;i<a.length;i+=2) {
+    const dimension = a[i];
+    const points = a[i+1];
+    state.scores[dimension] += points;
+  }
+  state.answers.push({q:s.q, answer:a[1]});
+
+  if (state.index >= scenarios.length - 1) {
+    showResult();
+    return;
+  }
+
+  state.index++;
+  renderScenario();
+}
+
+function showResult() {
+  document.getElementById("progressText").textContent = "Complete";
+  document.getElementById("progressPct").textContent = "100%";
+  document.getElementById("progressBar").style.width = "100%";
+
+  document.getElementById("questionCard").style.display = "none";
+  document.getElementById("testerFooter").style.display = "none";
+  document.getElementById("result").classList.add("show");
+
+  const ordered = Object.entries(state.scores).sort((a,b)=>b[1]-a[1]);
+  const top = ordered[0][0];
+  const second = ordered[1][0];
+
+  const titles = {
+    defensiveness:"The Defensive Mirror",
+    blame:"The Externalizer",
+    escalation:"The Escalator",
+    accountability:"The Self-Auditor",
+    deescalation:"The Pressure Valve",
+    status:"The Status Defender"
+  };
+
+  const intros = {
+    defensiveness:"When your self-image is challenged, your first instinct appears to be protection. You may focus on defending your position before examining the criticism itself.",
+    blame:"Your answers show a tendency to move the spotlight outward when pressure rises. Context matters, but watch for the point where context becomes a substitute for ownership.",
+    escalation:"Your pattern leans toward fighting the pressure rather than absorbing it. Under ego threat, winning the exchange can become more important than solving the original problem.",
+    accountability:"You showed a relatively strong willingness to inspect your own role even when the question was intentionally uncomfortable. That does not mean you never become defensive; it means you tend to have an exit route back to reflection.",
+    deescalation:"Your strongest pattern is temperature control. You appear more willing to protect the conversation from becoming a contest, even when your pride is being tested.",
+    status:"Your answers suggest that competence, respect, and social position can become part of the argument. When status enters the room, the original issue may become secondary."
+  };
+
+  document.getElementById("resultTitle").textContent = titles[top];
+  document.getElementById("resultIntro").textContent = intros[top];
+
+  const grid = Object.entries(labels).map(([key,meta]) => {
+    const max = 24;
+    const score = state.scores[key];
+    const pct = Math.min(100, Math.round((score/max)*100));
+    return `
+      <div class="metric">
+        <div class="metric-head">
+          <div class="metric-name">${meta.name}</div>
+          <div class="metric-score">${score}</div>
+        </div>
+        <div class="metric-bar"><div class="metric-fill" style="width:${pct}%"></div></div>
+        <div class="metric-desc">${meta.desc}</div>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("resultGrid").innerHTML = grid;
+
+  const verdicts = {
+    defensiveness:`<strong>Your main trigger:</strong> being interpreted incorrectly or judged unfairly. The useful question is not “How do I prove them wrong?” but “Is there anything in the criticism I can still use?”`,
+    blame:`<strong>Your main trigger:</strong> being held individually responsible for a system that involved other people. Context can be legitimate; the danger is using context to avoid examining your own contribution.`,
+    escalation:`<strong>Your main trigger:</strong> losing the contest. When the conversation starts feeling like a status battle, ask whether winning the argument is still connected to solving the problem.`,
+    accountability:`<strong>Your strongest lever:</strong> self-correction. Keep watching what happens when accountability has a social cost — especially when admitting fault would let somebody else feel “right.”`,
+    deescalation:`<strong>Your strongest lever:</strong> emotional temperature control. Keep it, but do not confuse calmness with avoiding necessary confrontation or accountability.`,
+    status:`<strong>Your main trigger:</strong> disrespect. When competence or rank feels threatened, the temptation is to restore status. Before doing that, identify the actual problem and solve that instead.`
+  };
+
+  document.getElementById("verdict").innerHTML =
+    verdicts[top] +
+    ` <span style="color:#888">Your secondary pattern was <strong>${labels[second].name.toLowerCase()}</strong>.</span>`;
+
+  window.scrollTo({top: document.getElementById("tester").offsetTop - 10, behavior:"smooth"});
+}
+
+function restartTest() {
+  document.getElementById("questionCard").style.display = "";
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("testerFooter").style.display = "";
+  startTest();
+}
+
+function copyResult() {
+  const title = document.getElementById("resultTitle").textContent;
+  const intro = document.getElementById("resultIntro").textContent;
+  const text = `EGO TESTER\n${title}\n\n${intro}\n\nDefensiveness: ${state.scores.defensiveness}\nBlame shifting: ${state.scores.blame}\nEscalation: ${state.scores.escalation}\nAccountability: ${state.scores.accountability}\nDe-escalation: ${state.scores.deescalation}\nStatus defense: ${state.scores.status}`;
+  navigator.clipboard?.writeText(text).then(()=> {
+    alert("Result copied.");
+  }).catch(()=> {
+    window.prompt("Copy your result:", text);
+  });
+}
+
+function scrollToInfo() {
+  document.getElementById("info").scrollIntoView({behavior:"smooth"});
+}
+
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[ch]));
+}
+</script>
+</body>
+</html>
