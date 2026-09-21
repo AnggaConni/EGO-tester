@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGO TESTER — When Ego Turns a Small Conflict Into a Bigger One</title>
+<meta name="description" content="EGO TESTER explores ego defense, blame externalization, and the tendency to drag unrelated people into personal conflicts.">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --navy:#002855;
+    --blue:#005eb8;
+    --pale:#edf6ff;
+    --text:#333;
+    --muted:#666;
+    --line:#e5e5e5;
+    --soft:#f7f9fb;
+  }
+  body{
+    margin:0;
+    font-family:Inter,Arial,sans-serif;
+    color:var(--text);
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{text-decoration:none;color:inherit}
+  button{font:inherit}
+  .wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+  .nav{
+    height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px
+  }
+  .brand{font-weight:800;font-size:18px;letter-spacing:-.03em;color:var(--navy)}
+  .nav-note{font-size:13px;color:#777}
+  .hero{
+    position:relative;overflow:hidden;min-height:590px;padding:70px 56px;border-radius:4px;
+    background:
+      linear-gradient(90deg,rgba(0,40,85,.97),rgba(0,40,85,.72)),
+      radial-gradient(circle at 85% 20%,rgba(157,215,255,.34),transparent 35%),
+      linear-gradient(135deg,#163d63,#002855);
+    color:#fff;display:flex;align-items:center
+  }
+  .hero:after{
+    content:"";position:absolute;width:420px;height:420px;border:1px solid rgba(255,255,255,.13);
+    border-radius:50%;right:-130px;top:-90px;box-shadow:0 0 0 34px rgba(255,255,255,.025),0 0 0 70px rgba(255,255,255,.018)
+  }
+  .hero-content{position:relative;z-index:1;max-width:810px}
+  .eyebrow{
+    display:inline-flex;padding:7px 11px;border:1px solid rgba(255,255,255,.25);
+    border-radius:20px;background:rgba(255,255,255,.1);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase
+  }
+  h1{
+    margin:18px 0 16px;max-width:840px;font-size:clamp(46px,7vw,78px);line-height:.97;
+    letter-spacing:-.06em;color:#fff
+  }
+  .accent{color:#9dd7ff}
+  .lead{max-width:760px;margin:0;color:rgba(255,255,255,.88);font-size:17px;line-height:1.7}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:5px;
+    font-size:13px;font-weight:800;transition:.2s ease
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.16)}
+  .btn.primary{background:#fff;color:var(--navy)}
+  .btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff}
+  .formula{
+    display:inline-flex;gap:9px;flex-wrap:wrap;margin-top:22px;padding:10px 12px;border-radius:4px;
+    border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);font-size:12px;font-weight:700
+  }
+  .arrow{opacity:.45}
+  .section{
+    margin-top:24px;padding:32px;border:1px solid var(--line);background:#fff
+  }
+  .kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  h2{
+    margin:8px 0 12px;color:var(--navy);font-size:34px;line-height:1.08;letter-spacing:-.04em
+  }
+  .section p{max-width:900px;margin:0 0 14px;color:#555;font-size:14px;line-height:1.75}
+  .callout{
+    margin-top:18px;padding:18px 18px 18px 20px;border-left:3px solid var(--blue);background:var(--soft);
+    color:#4b4b4b;font-size:14px;line-height:1.7
+  }
+  .quote{
+    margin:22px 0 0;padding:21px;border:1px solid #e8edf2;background:#fbfcfe;color:var(--navy);
+    font-size:19px;line-height:1.5;font-weight:700
+  }
+  .quote small{display:block;margin-top:10px;color:#888;font-size:11px;font-weight:600}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .card{padding:20px;border:1px solid var(--line);background:#fff}
+  .num{
+    width:36px;height:36px;display:grid;place-items:center;border-radius:4px;background:var(--pale);
+    color:var(--blue);font-weight:800;font-size:14px
+  }
+  .card h3{margin:15px 0 8px;color:var(--navy);font-size:19px;letter-spacing:-.02em}
+  .card p{font-size:13px;line-height:1.65;color:#666;margin:0}
+  .loop{
+    margin-top:20px;display:grid;grid-template-columns:repeat(6,1fr);gap:8px
+  }
+  .loop div{
+    min-height:76px;padding:12px 10px;border:1px solid var(--line);background:#fbfcfe;
+    display:flex;flex-direction:column;justify-content:center
+  }
+  .loop strong{font-size:12px;color:var(--navy)}
+  .loop span{font-size:10px;color:#888;margin-top:4px;line-height:1.35}
+  .solution-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+  .solution{padding:20px;border:1px solid var(--line);background:#fff}
+  .solution h3{margin:0 0 8px;color:var(--navy);font-size:17px}
+  .solution p{margin:0;font-size:13px;line-height:1.65;color:#666}
+  .steps{counter-reset:step;display:grid;gap:10px;margin-top:20px}
+  .step{display:grid;grid-template-columns:42px 1fr;gap:13px;align-items:start;padding:15px;border:1px solid var(--line);background:#fbfcfe}
+  .step:before{
+    counter-increment:step;content:counter(step);display:grid;place-items:center;width:32px;height:32px;
+    background:var(--navy);color:#fff;border-radius:4px;font-size:12px;font-weight:800
+  }
+  .step strong{color:var(--navy);font-size:14px}
+  .step p{margin:4px 0 0;color:#666;font-size:12px;line-height:1.6}
+  .cta{
+    margin-top:24px;padding:36px;border:1px solid #dce7f0;background:var(--pale);
+    display:flex;align-items:center;justify-content:space-between;gap:22px
+  }
+  .cta h2{margin:0 0 8px}
+  .cta p{margin:0;color:#5d6670;font-size:13px;line-height:1.6;max-width:700px}
+  .cta .btn{background:var(--navy);color:#fff}
+  .footer{padding:28px 6px;text-align:center;color:#888;font-size:12px;line-height:1.6}
+  .footer strong{color:#555}
+  @media(max-width:780px){
+    .wrap{width:min(100% - 18px,680px)}
+    .nav{height:62px}.nav-note{display:none}
+    .hero{min-height:560px;padding:44px 26px}
+    h1{font-size:52px}
+    .cards,.solution-grid,.loop{grid-template-columns:1fr}
+    .section{padding:26px 22px}
+    .cta{flex-direction:column;align-items:flex-start}
+  }
+  @media(max-width:520px){h1{font-size:44px}.hero-actions{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand">EGO TESTER</div>
+    <div class="nav-note">A provocation-based self-reflection simulator</div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">⚠ Ego under pressure</div>
+        <h1>Sometimes the conflict isn't the problem.<br><span class="accent">Your ego is.</span></h1>
+        <p class="lead">
+          A small disagreement can become a large organizational problem when the need to avoid being wrong
+          becomes stronger than the need to solve the original issue.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="./ego-tester.html">Take the EGO TESTER →</a>
+          <a class="btn secondary" href="#why">Understand the pattern</a>
+        </div>
+
+        <div class="formula">
+          <b>Ego threatened</b><span class="arrow">→</span>
+          <b>Defend</b><span class="arrow">→</span>
+          <b>Find justification</b><span class="arrow">→</span>
+          <b>Drag people in</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="why">
+      <div class="kicker">01 · Ego defense</div>
+      <h2>When the question changes from “How do we solve this?” to “How do I avoid looking wrong?”</h2>
+      <p>
+        Ego defense happens when being wrong feels more threatening than the problem itself. Instead of examining
+        the issue, the person starts protecting their self-image.
+      </p>
+      <div class="quote">
+        “What is the problem, and how do we solve it?”
+        <br><span style="color:#999">becomes</span><br>
+        “How do I make sure I am not the one who looks wrong?”
+      </div>
+      <p class="callout">
+        The original conflict may be simple. But admitting fault can feel like losing status, control, dignity,
+        or social position. That can keep an argument alive long after the useful part of the discussion is over.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="kicker">02 · Externalization of blame</div>
+      <h2>Then the problem starts looking for an audience.</h2>
+      <p>
+        A conflict that could have remained between two people can be expanded into a much larger social or
+        organizational issue: colleagues are consulted, teams are pulled in, authority is involved, and people
+        who were never part of the original problem suddenly have to carry its consequences.
+      </p>
+
+      <div class="cards">
+        <article class="card">
+          <div class="num">A</div>
+          <h3>Personal conflict</h3>
+          <p>A has a disagreement with B. The issue is primarily between A and B.</p>
+        </article>
+        <article class="card">
+          <div class="num">B</div>
+          <h3>Blame expands</h3>
+          <p>A starts collecting explanations, allies, witnesses, or people who can validate A's version.</p>
+        </article>
+        <article class="card">
+          <div class="num">C</div>
+          <h3>Externality</h3>
+          <p>C, D, and the wider team now spend time, attention, and emotional energy on a conflict they did not create.</p>
+        </article>
+      </div>
+
+      <div class="quote">
+        “He is in hell, but he does not want to go alone.”
+        <small>Not every conflict needs an audience. Not every disagreement needs an organization.</small>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">03 · The escalation loop</div>
+      <h2>Once other people are involved, backing down becomes harder.</h2>
+      <p>
+        Bringing more people into the conflict can create a psychological trap: the more people who have heard
+        your side, the more difficult it may feel to admit that your original position was wrong.
+      </p>
+
+      <div class="loop">
+        <div><strong>Ego threatened</strong><span>“I cannot be the one at fault.”</span></div>
+        <div><strong>Conflict extended</strong><span>The original issue keeps reopening.</span></div>
+        <div><strong>Need for validation</strong><span>“Someone needs to understand my side.”</span></div>
+        <div><strong>People dragged in</strong><span>More witnesses, allies, or authority.</span></div>
+        <div><strong>Cost increases</strong><span>More people must now manage the conflict.</span></div>
+        <div><strong>Retreat gets harder</strong><span>Admitting error now feels socially expensive.</span></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">04 · How to stop it</div>
+      <h2>Solve the problem without recruiting an audience.</h2>
+      <p>
+        The practical goal is not to “win” the conflict. It is to reduce the distance between what happened
+        and what needs to happen next.
+      </p>
+
+      <div class="steps">
+        <div class="step">
+          <div><strong>Name the actual issue</strong><p>Strip away character judgments, old grievances, and unrelated accusations. What exactly happened?</p></div>
+        </div>
+        <div class="step">
+          <div><strong>Own your part first</strong><p>Ask, “What did I contribute?” before asking, “What did they do?” Accountability does not require accepting blame for everything.</p></div>
+        </div>
+        <div class="step">
+          <div><strong>Keep the audience proportional</strong><p>Only involve people who have a legitimate role in solving the issue. Do not turn a private conflict into a public campaign.</p></div>
+        </div>
+        <div class="step">
+          <div><strong>Separate facts from ego</strong><p>Being corrected is not the same as being humiliated. Losing an argument is not the same as losing your worth.</p></div>
+        </div>
+        <div class="step">
+          <div><strong>Ask one repair question</strong><p>“What can we do now that would actually resolve this?” A repair question moves the conversation from identity to action.</p></div>
+        </div>
+      </div>
+
+      <div class="solution-grid">
+        <div class="solution">
+          <h3>Personal problem → personal channel</h3>
+          <p>If the conflict is genuinely personal, keep it between the people involved unless there is a concrete reason to involve someone else.</p>
+        </div>
+        <div class="solution">
+          <h3>Work problem → work channel</h3>
+          <p>If the conflict affects work, escalate the factual work impact—not a campaign against the other person.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>One useful boundary:</strong> involve people because they can solve the problem, not because they can prove that you are right.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">05 · The experiment</div>
+      <h2>But how do you know what your ego does under pressure?</h2>
+      <p>
+        Neutral questions can reveal what you believe. Provocative questions can reveal how you defend it.
+        That is the idea behind EGO TESTER.
+      </p>
+      <p>
+        The simulator deliberately challenges competence, status, hypocrisy, accountability, disagreement,
+        and the temptation to pull other people into a conflict. The result is a reflection on response patterns,
+        not a clinical diagnosis.
+      </p>
+    </section>
+
+    <section class="cta">
+      <div>
+        <h2>Ready to press the button?</h2>
+        <p>The test gets progressively more uncomfortable. That is the point. Your strongest reaction may tell you more than your nicest answer.</p>
+      </div>
+      <a class="btn" href="./ego-tester.html">Open EGO TESTER →</a>
+    </section>
+
+    <div class="footer">
+      <strong>EGO TESTER</strong> · Challenge the ego. Observe the response. Learn the pattern.
+    </div>
+  </main>
+</div>
+</body>
+</html>
