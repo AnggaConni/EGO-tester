@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGO LAB — Understanding Ego, Self-Image & Group Intelligence</title>
+<meta name="description" content="EGO LAB explores ego, self-concept, ego defense, social status, and what the Weizmann ants-vs-humans experiment can teach us about cooperation.">
+<style>
+*{box-sizing:border-box}
+:root{
+  --navy:#002855;--blue:#005eb8;--pale:#edf6ff;--ink:#333;--muted:#666;
+  --line:#e5e5e5;--soft:#f7f9fb;--warm:#fff9ed
+}
+body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:800;font-size:18px;letter-spacing:-.03em;color:var(--navy)}
+.nav-links{display:flex;gap:16px;color:#777;font-size:12px;font-weight:700}
+.nav-links a:hover{color:var(--blue)}
+.hero{
+  position:relative;overflow:hidden;min-height:560px;padding:68px 56px;border-radius:4px;color:#fff;
+  background:
+    linear-gradient(90deg,rgba(0,40,85,.98),rgba(0,40,85,.74)),
+    radial-gradient(circle at 82% 25%,rgba(157,215,255,.3),transparent 34%),
+    linear-gradient(135deg,#163d63,#002855);
+  display:flex;align-items:center
+}
+.hero:after{
+  content:"";position:absolute;width:430px;height:430px;border:1px solid rgba(255,255,255,.13);border-radius:50%;
+  right:-120px;top:-100px;box-shadow:0 0 0 38px rgba(255,255,255,.022),0 0 0 78px rgba(255,255,255,.015)
+}
+.hero-content{position:relative;z-index:2;max-width:820px}
+.eyebrow{display:inline-flex;padding:7px 11px;border:1px solid rgba(255,255,255,.25);border-radius:20px;background:rgba(255,255,255,.1);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+h1{margin:18px 0 16px;max-width:900px;font-size:clamp(46px,7vw,78px);line-height:.97;letter-spacing:-.06em;color:#fff}
+.accent{color:#9dd7ff}
+.lead{max-width:800px;color:rgba(255,255,255,.88);font-size:17px;line-height:1.7;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 18px;border-radius:5px;font-size:13px;font-weight:800;transition:.2s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.15)}
+.btn.primary{background:#fff;color:var(--navy)}
+.btn.secondary{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff}
+.formula{display:inline-flex;gap:9px;flex-wrap:wrap;margin-top:22px;padding:10px 12px;border-radius:4px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);font-size:12px;font-weight:700}
+.arrow{opacity:.45}
+.section{margin-top:24px;padding:32px;border:1px solid var(--line);background:#fff}
+.kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+h2{margin:8px 0 12px;color:var(--navy);font-size:34px;line-height:1.08;letter-spacing:-.04em}
+h3{color:var(--navy)}
+.section p{max-width:920px;color:#555;font-size:14px;line-height:1.75;margin:0 0 13px}
+.callout{margin-top:18px;padding:17px 18px 17px 20px;border-left:3px solid var(--blue);background:var(--soft);color:#4b4b4b;font-size:13px;line-height:1.65}
+.definition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.def{padding:20px;border:1px solid var(--line);background:#fff}
+.def .n{width:36px;height:36px;display:grid;place-items:center;border-radius:4px;background:var(--pale);color:var(--blue);font-weight:800}
+.def h3{margin:14px 0 8px;font-size:18px}
+.def p{margin:0;font-size:13px}
+.myth{
+  margin-top:20px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line)
+}
+.myth>div{padding:22px}
+.myth .bad{background:#fffaf8;border-right:1px solid var(--line)}
+.myth .good{background:#f8fbfe}
+.myth h3{margin:0 0 8px;font-size:17px}
+.myth p{margin:0;font-size:13px}
+.diagram{
+  margin-top:22px;padding:24px;border:1px solid var(--line);background:#fbfcfe
+}
+.maze{
+  position:relative;max-width:820px;height:245px;margin:auto;border:3px solid #bdd0df;background:#fff;overflow:hidden
+}
+.wall{position:absolute;background:#d7e4ed}
+.w1{left:33%;top:0;width:18px;height:64%}.w2{left:66%;top:36%;width:18px;height:64%}
+.gate1{position:absolute;left:33%;top:28%;height:28px;width:18px;background:#fff}
+.gate2{position:absolute;left:66%;top:47%;height:28px;width:18px;background:#fff}
+.tload{
+  position:absolute;left:35%;top:90px;width:150px;height:56px;background:#d7e9f8;border:3px solid var(--blue);border-radius:4px;
+  transform:rotate(0deg)
+}
+.tload:before{content:"";position:absolute;left:48px;top:-47px;width:54px;height:47px;background:#d7e9f8;border:3px solid var(--blue);border-bottom:0;border-radius:4px 4px 0 0}
+.ant{position:absolute;width:10px;height:10px;background:#333;border-radius:50%;box-shadow:11px 4px 0 -2px #333,-9px 7px 0 -2px #333}
+.a1{left:27%;top:95px}.a2{left:29%;top:132px}.a3{left:27%;top:159px}.a4{left:67%;top:72px}.a5{left:70%;top:182px}
+.person{position:absolute;width:22px;height:30px;border:3px solid #005eb8;border-radius:50% 50% 35% 35%;opacity:.95}
+.p1{right:6%;top:22px}.p2{right:10%;top:65px}.p3{right:6%;top:108px}
+.labels{display:flex;justify-content:space-between;max-width:820px;margin:10px auto 0;color:#777;font-size:11px}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.result-card{padding:20px;border:1px solid var(--line);background:#fff}
+.result-card strong{display:block;color:var(--navy);font-size:18px;margin-bottom:7px}
+.result-card p{margin:0;font-size:12px;line-height:1.6;color:#666}
+.highlight{margin-top:20px;padding:20px;border:1px solid #dce7f0;background:var(--pale);color:#334;line-height:1.7;font-size:14px}
+.highlight strong{color:var(--navy)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.source-card{padding:19px;border:1px solid var(--line);background:#fff}
+.source-card h3{margin:0 0 8px;font-size:16px}
+.source-card p{font-size:12px;margin:0 0 12px}
+.source-card a{color:var(--blue);font-size:12px;font-weight:800}
+.lab-question{margin-top:20px;padding:24px;border:1px solid var(--line);background:#fbfcfe}
+.lab-question h3{margin:0 0 8px;font-size:20px}
+.lab-question p{margin:0 0 12px;font-size:13px}
+.answer-line{padding:12px 14px;margin-top:8px;background:#fff;border-left:3px solid #dfe7ef;color:#555;font-size:12px}
+.footer{padding:28px 6px;text-align:center;color:#888;font-size:12px;line-height:1.6}
+.footer strong{color:#555}
+@media(max-width:780px){
+  .wrap{width:min(100% - 18px,680px)}.nav{height:62px}.nav-links{display:none}
+  .hero{min-height:550px;padding:44px 26px}.definition-grid,.results,.two-col,.myth{grid-template-columns:1fr}
+  .myth .bad{border-right:0;border-bottom:1px solid var(--line)}
+  .section{padding:26px 22px}.maze{height:205px}.tload{left:29%;top:78px;transform:scale(.82)}
+  .labels{font-size:10px}.hero-actions{flex-direction:column;align-items:stretch}
+}
+@media(max-width:520px){h1{font-size:44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <div class="brand">EGO LAB</div>
+    <div class="nav-links">
+      <a href="./index.html">Home</a>
+      <a href="./ego-tester.html">EGO TESTER</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <div class="eyebrow">🧠 A field guide to the ego</div>
+        <h1>Before you test the ego,<br><span class="accent">understand what it protects.</span></h1>
+        <p class="lead">
+          EGO LAB explores self-concept, ego defense, status threat, accountability and cooperation —
+          and asks a slightly uncomfortable question: what happens when protecting “me” becomes more important
+          than solving the problem?
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="./ego-tester.html">Test your response →</a>
+          <a class="btn secondary" href="./index.html">Back to EGO TESTER home</a>
+        </div>
+        <div class="formula">
+          <b>Self-image</b><span class="arrow">→</span>
+          <b>Threat</b><span class="arrow">→</span>
+          <b>Defense</b><span class="arrow">→</span>
+          <b>Behavior</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">01 · What is ego?</div>
+      <h2>Ego is not simply “being arrogant.”</h2>
+      <p>
+        In everyday speech, “ego” often means pride or an inflated sense of self. Psychology uses more specific
+        concepts. In psychoanalytic traditions, ego refers to functions involved in regulating impulses, planning,
+        and dealing with the external world. Related modern concepts such as <em>self-concept</em> describe how a
+        person understands and evaluates their own characteristics, roles, skills, and identity.
+      </p>
+      <p>
+        So EGO LAB uses “ego” as a practical umbrella for something very human: <strong>the system of beliefs,
+        evaluations and defenses that helps us maintain a coherent sense of self.</strong> That can be healthy.
+        It becomes problematic when protecting the self-image consistently takes priority over learning, repair,
+        or reality-testing.
+      </p>
+
+      <div class="definition-grid">
+        <article class="def">
+          <div class="n">01</div>
+          <h3>Identity</h3>
+          <p>“This is who I am.” Roles, competence, values, reputation and personal history become part of the self-story.</p>
+        </article>
+        <article class="def">
+          <div class="n">02</div>
+          <h3>Protection</h3>
+          <p>When that self-story is challenged, the mind can become motivated to defend it — sometimes before checking the facts.</p>
+        </article>
+        <article class="def">
+          <div class="n">03</div>
+          <h3>Regulation</h3>
+          <p>The useful side of the ego is not weakness. It includes planning, adaptation and functioning in the real world.</p>
+        </article>
+      </div>
+
+      <div class="myth">
+        <div class="bad">
+          <h3>❌ Ego ≠ arrogance</h3>
+          <p>Being confident, assertive or having a strong sense of identity does not automatically mean someone has an unhealthy ego.</p>
+        </div>
+        <div class="good">
+          <h3>✓ The interesting question</h3>
+          <p>What happens to your reasoning when your identity, competence, reputation or status is challenged?</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">02 · The ego under threat</div>
+      <h2>The conflict can change without the facts changing.</h2>
+      <p>
+        Imagine two versions of the same disagreement. In the first, you are simply asked to solve a problem.
+        In the second, someone implies that you caused it, that you are incompetent, or that other people already
+        think you are wrong. The facts may be identical. Your internal stakes are not.
+      </p>
+
+      <div class="callout">
+        <strong>That is the territory EGO TESTER explores:</strong> not whether a person is “good” or “bad,”
+        but how a response changes when the self-image becomes part of the problem.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">03 · Ants vs. humans</div>
+      <h2>What can an ant colony teach us about ego?</h2>
+      <p>
+        In a Weizmann Institute of Science experiment, researchers led by Prof. Ofer Feinerman compared ants and
+        humans solving a physical “piano movers” style maze. Both species had to maneuver a large T-shaped load
+        through a space divided into chambers and narrow openings. Humans and ants were tested alone and in groups.
+      </p>
+      <p>
+        The ant species used was <em>Paratrechina longicornis</em>. The human and ant setups were scaled to their
+        bodies, and some human group conditions restricted speaking and gestures to make the communication pattern
+        more comparable to the ants.
+      </p>
+
+      <div class="diagram">
+        <div class="maze">
+          <div class="wall w1"></div><div class="wall w2"></div>
+          <div class="gate1"></div><div class="gate2"></div>
+          <div class="tload"></div>
+          <div class="ant a1"></div><div class="ant a2"></div><div class="ant a3"></div><div class="ant a4"></div><div class="ant a5"></div>
+          <div class="person p1"></div><div class="person p2"></div><div class="person p3"></div>
+        </div>
+        <div class="labels"><span>Single / small / large groups</span><span>T-shaped load</span><span>Maze with narrow passages</span></div>
+      </div>
+
+      <div class="results">
+        <article class="result-card">
+          <strong>Individuals</strong>
+          <p>Humans had the advantage in the individual challenge, where they could use planning and strategic reasoning.</p>
+        </article>
+        <article class="result-card">
+          <strong>Ant groups</strong>
+          <p>Ant groups improved over individuals and, in some conditions, outperformed human groups.</p>
+        </article>
+        <article class="result-card">
+          <strong>Human groups</strong>
+          <p>Human groups did not significantly improve over individuals in the tested task; restricted communication could reduce performance.</p>
+        </article>
+      </div>
+
+      <div class="highlight">
+        <strong>The striking idea:</strong> the researchers describe an emergent form of collective memory in the ant
+        groups. Their interpretation was that the colony can function like a “super-organism,” with cooperation
+        outweighing competition. Human groups in this task showed a different pattern: participants could gravitate
+        toward obvious or consensus-friendly choices instead of consistently following the best individual strategy.
+      </div>
+
+      <p style="margin-top:18px">
+        The study therefore does <strong>not</strong> show that “ants are smarter than humans” in general.
+        It shows that <strong>group performance depends on how coordination works</strong>, and that a larger
+        human group is not automatically a smarter decision-maker.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="kicker">04 · Where ego enters the room</div>
+      <h2>A group can have more brains — and still make a worse decision.</h2>
+      <p>
+        The ants-vs-humans experiment is not an experiment measuring “human ego” directly. But it creates a useful
+        laboratory metaphor for thinking about ego in organizations: people bring individual goals, status concerns,
+        reputational risks, preferences and the desire to be heard into group decisions.
+      </p>
+
+      <div class="definition-grid">
+        <article class="def">
+          <div class="n">A</div>
+          <h3>My idea</h3>
+          <p>I have already invested identity and effort in a particular solution. Rejecting it can feel personal.</p>
+        </article>
+        <article class="def">
+          <div class="n">B</div>
+          <h3>Our consensus</h3>
+          <p>The group may prefer an option that feels acceptable to everyone, even when it is not the strongest solution.</p>
+        </article>
+        <article class="def">
+          <div class="n">C</div>
+          <h3>The actual goal</h3>
+          <p>The problem does not care who was right. It only cares whether the system actually solves it.</p>
+        </article>
+      </div>
+
+      <div class="quote" style="margin-top:20px;padding:21px;border:1px solid #e8edf2;background:#fbfcfe;color:var(--navy);font-size:20px;line-height:1.5;font-weight:700">
+        “A group does not automatically become wiser just because more people are in the room.”
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">05 · The anti-ego habit</div>
+      <h2>How do you keep the self out of the solution?</h2>
+      <div class="two-col">
+        <article class="source-card">
+          <h3>Separate the person from the proposition.</h3>
+          <p>“Your idea is wrong” and “you are wrong” are not the same statement. Challenge the reasoning, not the person's identity.</p>
+        </article>
+        <article class="source-card">
+          <h3>Reward correction.</h3>
+          <p>Make it socially safe to say “I was wrong.” A system that punishes correction teaches people to defend bad decisions.</p>
+        </article>
+        <article class="source-card">
+          <h3>Ask for evidence before allies.</h3>
+          <p>Before collecting supporters, ask what evidence would actually change the decision.</p>
+        </article>
+        <article class="source-card">
+          <h3>Escalate for resolution, not validation.</h3>
+          <p>Bring someone in because they have authority, expertise or responsibility to resolve the issue — not merely because they can confirm your side.</p>
+        </article>
+      </div>
+
+      <div class="lab-question">
+        <h3>🧪 Lab question</h3>
+        <p>When someone proves that you are wrong, which sentence feels harder to say?</p>
+        <div class="answer-line">A. “Show me where my reasoning failed.”</div>
+        <div class="answer-line">B. “I disagree, and here is my evidence.”</div>
+        <div class="answer-line">C. “You are misunderstanding the situation.”</div>
+        <div class="answer-line">D. “Fine. You were right.”</div>
+        <div class="callout">
+          There is no “perfect” answer here. The interesting part is which answer feels emotionally expensive.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="kicker">06 · Research notes</div>
+      <h2>Read the experiment from the source.</h2>
+      <div class="two-col">
+        <div class="source-card">
+          <h3>Weizmann Institute · Brief</h3>
+          <p>“Ants vs. humans: Putting group smarts to the test” — November 6, 2025. Describes the maze, group conditions and interpretation of collective problem solving.</p>
+          <a href="https://www.weizmann.ac.il/WeizmannCompass/sections/briefs/ants-vs-humans" target="_blank" rel="noopener">Open Weizmann Compass →</a>
+        </div>
+        <div class="source-card">
+          <h3>Weizmann Canada · Science story</h3>
+          <p>“Ants vs. Humans: Putting Group Smarts to the Test” — December 23, 2024. Provides the detailed public-facing account and experiment context.</p>
+          <a href="https://www.weizmann.ca/news/ants-vs-humans-putting-group-smarts-to-the-test/" target="_blank" rel="noopener">Open Weizmann Canada →</a>
+        </div>
+        <div class="source-card">
+          <h3>Ofer Feinerman Lab</h3>
+          <p>Research page describing the cooperative problem-solving setup, restricted/free communication conditions and the interpretation of emergent short-term memory in ants.</p>
+          <a href="https://www.weizmann.ac.il/complex/feinerman/research/collective-problem-solving-ants-vs-humans" target="_blank" rel="noopener">Open research page →</a>
+        </div>
+        <div class="source-card">
+          <h3>Psychology reference</h3>
+          <p>APA Dictionary entries on ego psychology and self-concept help distinguish technical psychological concepts from the everyday use of “ego.”</p>
+          <a href="https://dictionary.apa.org/ego-psychology" target="_blank" rel="noopener">APA · Ego psychology →</a>
+          <a href="https://dictionary.apa.org/self-concept" target="_blank" rel="noopener" style="display:block;margin-top:6px">APA · Self-concept →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero" style="margin-top:24px;min-height:330px;padding:45px 40px">
+      <div class="hero-content">
+        <div class="eyebrow">⚡ Now test the theory</div>
+        <h2 style="color:#fff;font-size:42px;margin-top:16px">Knowing the ego is easy.<br><span class="accent">Watching yours react is harder.</span></h2>
+        <p class="lead" style="font-size:15px">EGO TESTER deliberately raises the temperature. See which response pattern appears when competence, status and accountability are pushed.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="./ego-tester.html">Open EGO TESTER →</a>
+          <a class="btn secondary" href="./index.html">Back to EGO TESTER</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <strong>EGO LAB</strong> · Study the ego. Observe the system. Then test the reaction.
+    </div>
+  </main>
+</div>
+</body>
+</html>
